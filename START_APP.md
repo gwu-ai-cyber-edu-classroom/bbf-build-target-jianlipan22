@@ -6,32 +6,36 @@
 
 ## What this app is
 
-- **App:** <one line — e.g., "a paste-bin service" (menu #1)>
-- **Stack:** <Python + Flask / FastAPI, or Node + Express>
+- **App:** a URL shortener service (menu #3)
+- **Stack:** Python + Flask
 
 ## Start it
 
 ```bash
-# 1. Install dependencies
-<e.g. pip install -r requirements.txt   OR   npm install>
+# 1. Install dependencies (one time)
+python -m venv .venv
+source .venv/Scripts/activate     # Windows Git Bash; use .venv/bin/activate on macOS/Linux
+pip install -r requirements.txt
 
 # 2. Run it
-<e.g. flask --app app run --port 8000   OR   uvicorn app:app --port 8000   OR   node server.js>
+python app.py
 ```
 
-- **Base URL:** <e.g. http://localhost:8000>
+- **Base URL:** http://localhost:8000
 - **Stop it:** Ctrl-C in the terminal running it.
 
 ## How to interact with it
 
 - **Main endpoints / pages:**
-  - `<METHOD> <path>` — <what it does> — <example>
-  - `<METHOD> <path>` — <what it does> — <example>
-- **Accounts / credentials for legitimate use** (if the app has login): <demo username/password, or "none">
+  - `GET /` — home page: a form to shorten a URL, plus a list of public short links — `curl http://localhost:8000/`
+  - `POST /shorten` — create a short link from form fields `name` and `url`; returns the new short code — `curl -X POST http://localhost:8000/shorten -d "name=MySite&url=https://www.wikipedia.org"`
+  - `GET /<code>` — redirect (302) to the stored long URL for that code — `curl -i http://localhost:8000/2`
+  - `GET /stats/<code>` — show a link's name, destination, and click count — `curl http://localhost:8000/stats/2`
+- **Accounts / credentials for legitimate use:** none (no login)
 - **A benign request that should succeed:**
 
   ```bash
-  <e.g. curl http://localhost:8000/notes/1>
+  curl -i http://localhost:8000/2
   ```
 
 ## For breakers
